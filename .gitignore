@@ -90,3 +90,4 @@ yarn-error.log
 
 .vercel
 firebase.json
+.env

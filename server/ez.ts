@@ -2,7 +2,6 @@ import { CreateApp } from '@graphql-ez/vercel'
 import { ezSchema, gql } from '@graphql-ez/plugin-schema'
 import fb from './firebase-plugin'
 import admin from 'firebase-admin'
-import serviceAccount from './firebase.json'
 
 export const ezApp = CreateApp({
   cors: true,
@@ -30,7 +29,11 @@ export const ezApp = CreateApp({
     plugins: [
       fb({
         firebaseApp: admin.initializeApp({
-          credential: admin.credential.cert(serviceAccount),
+          credential: admin.credential.cert({
+            projectId: process.env.FIREBASE_PROJECT_ID,
+            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+            privateKey: process.env.FIREBASE_PRIVATE_KEY,
+          }),
         }),
       }),
     ],
